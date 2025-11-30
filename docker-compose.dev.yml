@@ -1,0 +1,103 @@
+services:
+  mongodb:
+    image: mongo:7
+    container_name: test-mongodb-dev
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: devpassword
+      MONGO_INITDB_DATABASE: test_dev
+    volumes:
+      - mongodb_dev_data:/data/db
+    networks:
+      - test-dev
+
+  redis:
+    image: redis:7-alpine
+    container_name: test-redis-dev
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass devpassword --appendonly yes
+    volumes:
+      - redis_dev_data:/data
+    networks:
+      - test-dev
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 30s
+      timeout: 3s
+      retries: 5
+
+  # Authentication Microservice
+  authentication:
+    build:
+      context: .
+      dockerfile: apps/authentication/Dockerfile
+    container_name: test-auth-dev
+    environment:
+      - NODE_ENV=development
+      - AUTH_MS_PORT=3000
+      - MONGODB_URI=mongodb://admin:devpassword@mongodb:27017/test_dev?authSource=admin
+      - MONGODB_DB_NAME=test_dev
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=devpassword
+      - REDIS_DB=0
+      - REDIS_KEY_PREFIX=auth-dev
+      - REDIS_DEFAULT_TTL=3600
+      - JWT_ACCESS_PRIVATE_KEY_PATH=/usr/src/app/apps/authentication/config/secrets/jwt_access_private.pem
+      - JWT_REFRESH_PRIVATE_KEY_PATH=/usr/src/app/apps/authentication/config/secrets/jwt_refresh_private.pem
+      - JWT_ACCESS_KID=access-v1
+      - JWT_REFRESH_KID=refresh-v1
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - test-dev
+    volumes:
+      - ./apps/authentication/config:/usr/src/app/apps/authentication/config:ro
+
+  # Gateway Service
+  gateway:
+    build:
+      context: .
+      dockerfile: apps/gateway/Dockerfile
+    container_name: test-gateway-dev
+    environment:
+      - NODE_ENV=development
+      - GATEWAY_HTTP_PORT=4000
+      - AUTH_MS_HOST=authentication  # Service name for internal communication
+      - AUTH_MS_PORT=3000
+      - MONGODB_URI=mongodb://admin:devpassword@mongodb:27017/test_dev?authSource=admin
+      - MONGODB_DB_NAME=test_dev
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=devpassword
+      - REDIS_DB=1
+      - REDIS_KEY_PREFIX=gateway-dev
+      - REDIS_DEFAULT_TTL=1800
+      - JWT_ACCESS_PUBLIC_KEY_PATH=/usr/src/app/apps/gateway/config/secrets/jwt_access_public.pem
+      - JWT_REFRESH_PUBLIC_KEY_PATH=/usr/src/app/apps/gateway/config/secrets/jwt_refresh_public.pem
+      - JWT_ACCESS_KID=access-v1
+      - JWT_REFRESH_KID=refresh-v1
+    ports:
+      - "4000:4000"  # This is your main API endpoint
+    depends_on:
+      - authentication
+      - mongodb
+      - redis
+    networks:
+      - test-dev
+    volumes:
+      - ./apps/gateway/config:/usr/src/app/apps/gateway/config:ro
+
+networks:
+  test-dev:
+    driver: bridge
+
+volumes:
+  mongodb_dev_data:
+  redis_dev_data:

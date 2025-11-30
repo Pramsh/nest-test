@@ -1,0 +1,52 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "pwa-node",
+      "request": "attach",
+      "name": "Attach: Auth (9331)",
+      "port": 9331,
+      "restart": true,
+      "sourceMaps": true,
+      "smartStep": true,
+      "cwd": "${workspaceFolder}",
+      "skipFiles": [
+        "<node_internals>/**",
+        "${workspaceFolder}/node_modules/**",
+        "${workspaceFolder}/dist/**/main.js",
+        "**/webpack/bootstrap/**/*.js"
+      ],
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "!**/node_modules/**"
+      ]
+    },
+    {
+      "type": "pwa-node",
+      "request": "attach",
+      "name": "Attach: Gateway (9332)",
+      "port": 9332,
+      "restart": true,
+      "sourceMaps": true,
+      "smartStep": true,
+      "cwd": "${workspaceFolder}",
+      "skipFiles": [
+        "<node_internals>/**",
+        "${workspaceFolder}/node_modules/**",
+        "${workspaceFolder}/dist/**/main.js",
+        "**/webpack/bootstrap/**/*.js"
+      ],
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "!**/node_modules/**"
+      ]
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Attach: Both apps",
+      "configurations": ["Attach: Auth (9331)", "Attach: Gateway (9332)"],
+      "stopAll": true
+    }
+  ]
+}

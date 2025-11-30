@@ -1,0 +1,2 @@
+export const CACHE_CONNECTION = 'CACHE_CONNECTION';
+export const CACHE_SERVICE = 'CACHE_SERVICE';
