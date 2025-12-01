@@ -11,8 +11,8 @@ import { CacheModule } from '@common/cache';
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: [
-        'apps/authentication/.env.local', // per-app (optional)
-        '.env',                     // root fallback
+        'apps/authentication/.env.local', 
+        '.env',              
       ],
     }),
     DatabaseModule.forRoot(),

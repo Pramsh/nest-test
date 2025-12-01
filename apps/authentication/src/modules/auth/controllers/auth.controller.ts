@@ -28,7 +28,6 @@ export class AuthController {
     try {
       return await this.auth.register(dto.email, dto.password);
     } catch (e: any) {
-      // e.g., email already in use -> treat as 409
       throw new RpcException({
         statusCode: 409,
         error: 'Conflict',

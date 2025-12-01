@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 @Schema({
-  timestamps: true, // automatically manages createdAt / updatedAt
+  timestamps: true,
   collection: 'users',
 })
 export class User {
@@ -21,18 +21,15 @@ export class User {
   @Prop({ type: String, default: null })
   refreshJti: string | null;
 
-  // Type-only (no @Prop): these exist because of timestamps & transform
   readonly createdAt: Date;
   readonly updatedAt: Date;
   readonly id: string;
 }
 
-// Mongoose document type
 export type UserDocument = User & Document;
 
 export const UserSchema = SchemaFactory.createForClass(User);
 
-// If you prefer an explicit virtual instead of transform mapping:
 UserSchema.virtual('id').get(function (this: any) {
   return this._id?.toString();
 });
@@ -42,7 +39,6 @@ UserSchema.set('toJSON', {
   virtuals: true,
   versionKey: false,
   transform: (_doc, ret) => {
-    // virtual 'id' already added; just hide internal / sensitive fields
     delete (ret as any)._id;
     delete (ret as any).passwordHash;
     delete (ret as any).refreshTokenHash;

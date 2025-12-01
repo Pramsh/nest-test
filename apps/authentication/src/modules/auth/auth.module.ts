@@ -8,7 +8,6 @@ import { UsersModule } from '../users/users.module';
   imports: [
     UsersModule,
     JwtModule.register({}),
-    // For refresh, you can register a second JwtModule or inject env secrets manually
   ],
   providers: [AuthService],
   controllers: [AuthController],

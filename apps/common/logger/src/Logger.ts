@@ -4,7 +4,6 @@ export class Logger extends NestLogger {
   private shouldWriteToDb: boolean;
   private appName: string;
   private allowedCollections?: string[];
-  // Remove: private mongoConnection?: Connection;
 
   constructor(
     appName: string, 

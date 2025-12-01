@@ -2,8 +2,8 @@ interface RpcErrorPayload {
   statusCode?: number;
   message?: string | string[];
   error?: string;
-  status?: number; // alcuni transport usano "status"
-  code?: number;   // fallback
+  status?: number; 
+  code?: number;   
 }
 
 function parseMaybeJson(input: unknown): unknown {
@@ -18,7 +18,6 @@ function parseMaybeJson(input: unknown): unknown {
 }
 
 export function coerceRpcError(e: any): { status: number; message: string; error?: string; raw: any } {
-  // Possibile options: e, e.message, e.response, stringa JSON in e.message
   const candidates = [
     e?.response,
     e?.message,
@@ -27,7 +26,6 @@ export function coerceRpcError(e: any): { status: number; message: string; error
     .map(parseMaybeJson)
     .filter((v) => v != null);
 
-  // Trova il primo oggetto utile
   const obj =
     candidates.find((c) => typeof c === 'object' && !Array.isArray(c)) as RpcErrorPayload | undefined;
 
@@ -42,7 +40,6 @@ export function coerceRpcError(e: any): { status: number; message: string; error
     e?.error?.statusCode
   ];
   
-  // Find the first VALID numeric status code
   for (const candidate of statusCandidates) {
     if (typeof candidate === 'number' && candidate >= 100 && candidate <= 599) {
       status = candidate;
@@ -51,7 +48,6 @@ export function coerceRpcError(e: any): { status: number; message: string; error
   }
   
 
-  // Messaggio: preferisci stringa, altrimenti unisci array
   let message: string | undefined;
   const m = obj?.message ?? e?.message ?? e?.response?.message ?? e?.error;
   if (Array.isArray(m)) {
@@ -72,7 +68,6 @@ export function coerceRpcError(e: any): { status: number; message: string; error
           : 'Internal server error';
   }
 
-  // Campo "error" facoltativo, utile per coerenza body
   const error =
     typeof obj?.error === 'string'
       ? obj.error

@@ -9,10 +9,8 @@ export class FixedIpThrottlerGuard extends ThrottlerGuard {
     const req = reqProps.context.switchToHttp().getRequest();
     const tracker = await this.getTracker(req as any);
 
-    // generate the same-style key as the base guard using the explicit name
     const key = this.generateKey(reqProps.context, tracker, 'default');
 
-    // local in-process counter to visualize accumulation
     const count = (seen.get(key) ?? 0) + 1;
     seen.set(key, count);
 

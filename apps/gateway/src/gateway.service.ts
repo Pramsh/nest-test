@@ -9,23 +9,6 @@ export class GatewayService {
   ) {}
 
 
-  // New utility methods for cache management
-  async getUserLastLogin(email: string) {
-    return await this.cacheService.get(`last-login:${email}`);
-  }
-
-  async getFailedLoginAttempts(email: string): Promise<number> {
-    return await this.cacheService.get(`failed-login:${email}`) || 0;
-  }
-
-  async clearFailedLoginAttempts(email: string) {
-    await this.cacheService.del(`failed-login:${email}`);
-  }
-
-  async getRecentRegistrations(): Promise<string[]> {
-    return await this.cacheService.keys('recent-registration:*');
-  }
-
   // Health check method
   async healthCheck() {
     const cacheHealthy = await this.cacheService.ping();
