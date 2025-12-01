@@ -1,0 +1,20 @@
+meta {
+  name: Get Users
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:4000/user/users
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImFjY2Vzcy12MSJ9.eyJzdWIiOiI2OTFiNmRhZWZlZDRkNjk0Yjc5YzFkMmEiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNzY0NTIyMDczLCJleHAiOjE3NjQ1MjI5NzN9.mCL31N6pX820Fumm3C4oQk48H09TYgIxc9_IURGDmFKVlX5ZJAqxSRHZZ5--eCng1nwRcfcpWec0rqkrUmyXvua0fnFiEOY7qTNJsdYRi1qetQFeGXCImkCHzyzbOeFL6JtJPsjwVrJaAk09-aonMgjOCYHAgptEYevIyTscLkqtaMhsSa3rd9X5dA58WuzCsLkHnJP7Mg4AKVKZIBSddt-X5qemX0slLsygANikWRC5QZZ0kwrhB5-cBSsC30_07BXl6Zrvm42SFe8H_Hz7aEw5zNdWyiVJ7kn-ldB8ZgGb4cbWqcbnZyelclHmP_DwZpLAycAuuQrwKOJTN7ykwR1wjqfszUqk_GTENEg0ZDe86PwmKJK5psr68Vdt1NAPxnGHvL9Zw2X7x1AJFdYQVXXRh5quP_zJtKT1u12VDqYdb-_PjFSovG-rVgNYO0FLVD5nQkcFQjy6e4qUSmWqXzQMpxF_EbVX-h9RSZWWbJK7-LTBCqosyWhC-fnwGB3OOVwljRSk07z9bEYMeXyg0XZSr5X5bUSxcspZ12NOyzjSlq7J5nTq2NzjD4D2GEAida5l4LgNzuyTjMtWb9pG_IbZUOtqMYhby7-BVVMkHvXKhbHf-rBPpojK_uv9reYdKcMDMkL5HpKPBJYXcq4bmc6vQ8ihqjvAfvlxW6E-_xQ
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

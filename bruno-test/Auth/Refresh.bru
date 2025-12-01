@@ -1,0 +1,21 @@
+meta {
+  name: Refresh
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:4000/refresh
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+      "refreshToken":"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InJlZnJlc2gtdjEifQ.eyJzdWIiOiI2OTBlN2IyNjhiOGI2ZGY5YzJkNjJiNjAiLCJlbWFpbCI6InRlc3RAZW1haWwuY29tIiwianRpIjoiZThlZTUyMzctOWU1YS00NjVlLTllMGEtYzAwMWYxZjI1YTlmIiwiaWF0IjoxNzYyNzE3MzM3LCJleHAiOjE3NjMzMjIxMzd9.JorehtXuAgGp9fE5mDadSJDPh6PfjQMjRFjVFagtaSnRm0vuhIphmzoJ-p0xjxfHlfJj8kktt0ixc8erXjhPgOu4uZARaIonkzBd8xU0oG3hjBzncaRZex5Zk-fEISZ3FtY6-bXhR341a-Sgu0oY0istzrvLeM7Zq_dRh52uLuOSW7fwcnDOz1vasF4Eczry92CCtJD7t7uLBMXdNhmF5Emt4vVRbQ4I9CUVWDQFpL-BT089-UHHjSr22u8biIL7fiX8kEOpDIWAQkolSM2m0sT2KmrIg-T7xw4xADmeAgIAulnoGYjmhEhlqSm4WluRc3sse-EgAQzhgsd3hnr4ZOvte2KZfq6Qfc9yu6YtONYUmbbh4Wwxrixy0N9EbBZfsgTCes1csg3jmSIK_hERqOg8DtbpzfwvH7QV6KhjjYbkI_gNuEvvRCF8oRN7Er2ob1ncD_T-i8BFtqt6YT5Ikw7_nhUt9CNM3CrX1oEborQu51hd_2Az6f8Vx5Htb4_aAMfCwkdW1oxc561fpIhUkdB3KZznSn0_qOiD7A4bxKbRAzUlcbOEELMLkNKYujnBMGUkEBEbIl01PabLrBrmszVR-1w5LEku2dw8EedExSSi2QoUTGns3gKnF2GGfxS9VjEDrFW-QM_f2PHWtTF01venEtpYVC24VTx9qhI2m3g"
+  }
+}
+
+settings {
+  encodeUrl: true
+}
